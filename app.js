@@ -1,5 +1,4 @@
 'use strict';
-
 var readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
@@ -68,7 +67,8 @@ rules.on('Exacta', function(key, result) {
 
 var display = function(product, selection, dividends) {
   console.log("==============");
-  console.log(product + ":" + selection + ":$" + dividends.toFixed(2));  
+  var dividendOutput = dividends ? "$" + dividends.toFixed(2) : "NONE";
+  console.log(product + ":" + selection + ":" + dividendOutput);
 };
 
 readline.on("line", function(input) {

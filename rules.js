@@ -1,4 +1,5 @@
 'use strict';
+var _ = require('lodash');
 
 var events = require('events'); 
 
@@ -47,6 +48,9 @@ Rules.prototype.calculateDividends = function(key, selections) {
   }
   
   var dividends = totalStakes / stakes;
+  if (!_.isFinite(dividends))
+    dividends = null;
+  
   return dividends;
 };
 

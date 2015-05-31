@@ -1,7 +1,7 @@
 var parser = require('../rules.js');
 var expect = require('chai').expect;
 
-describe('when result is entered', function() {
+describe('when result is entered and some bets won', function() {
   beforeEach(function() {
     var result = { first: 2, second: 3, third: 1 };
     var bets = [ 
@@ -74,7 +74,7 @@ describe('when result is entered', function() {
       var placeFirstDividend = rules.calculateDividends('P', result.first);
       var placeSecondtDividend = rules.calculateDividends('P', result.second);
       var placeThirdDividend = rules.calculateDividends('P', result.third);
-      var exactaDividend = rules.calculateDividends('P', result.first + ',' + result.second);
+      var exactaDividend = rules.calculateDividends('E', result.first + ',' + result.second);
 
       expect(winDividend).to.eql(2.61);
       expect(placeFirstDividend).to.eql(1.06);
@@ -82,5 +82,33 @@ describe('when result is entered', function() {
       expect(placeFirstDividend).to.eql(2.13);
       expect(exactaDividend).to.eql(2.43);
     });
+  });
+});
+
+describe('when result is entered but no bets won', function() {
+  beforeEach(function() {
+    var result = { first: 2, second: 3, third: 1 };
+    var bets = [ 
+      { product: 'E', selections: '3,2', stake: '51' },
+    ];
+
+    rules.setProperties({
+      W: { name: 'Win', commission: 0.15 },
+      P: { name: 'Place', commission: 0.12, 
+           dividends: function(totalStakes) {
+             return totalStakes / 3; 
+           } 
+         },
+      E: { name: 'Exacta', commission: 0.18 },  
+    });
+    
+    for(var bet in bets) {
+      rules.addBet(bet);
+    }  
+  });
+  
+  it('should return null', function() {
+    var exactaDividend = rules.calculateDividends('E', result.first + ',' + result.second);
+    expect(exactaDividend).to.eql(null);
   });
 });
