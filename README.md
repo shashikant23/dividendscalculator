@@ -17,12 +17,12 @@ npm start
 ## Usage
 ### Input bets with the following format:
 ```
-Bet:<product>:<selections>:<stake>
+Bet:<bet type>:<selections>:<stake>
 ```
 where
-- <product> is one of W, P, E
-- <selection> is either a single runner number (e.g. 4) for Win and Place, or two runner numbers (e.g. 4,3) for Exacta
-- <stake> is an amount in whole dollars (e.g. 35)
+- ```<bet type>``` is one of W, P, E
+- ```<selection>``` is either a single runner number (e.g. 4) for Win and Place, or two runner numbers (e.g. 4,3) for Exacta
+- ```<stake>``` is an amount in whole dollars (e.g. 35)
 
 For example:
 ```
