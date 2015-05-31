@@ -78,8 +78,8 @@ describe('when result is entered and some bets won', function() {
 
       expect(winDividend).to.eql(2.61);
       expect(placeFirstDividend).to.eql(1.06);
-      expect(placeFirstDividend).to.eql(1.27);
-      expect(placeFirstDividend).to.eql(2.13);
+      expect(placeSecondtDividend).to.eql(1.27);
+      expect(placeThirdDividend).to.eql(2.13);
       expect(exactaDividend).to.eql(2.43);
     });
   });
