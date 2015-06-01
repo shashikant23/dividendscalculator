@@ -14,6 +14,7 @@ cd dividendscalculator
 npm install
 node app.js
 ```
+Tested on Mac and Windows 8.
 
 ## Usage
 ### Input bets with the following format:
