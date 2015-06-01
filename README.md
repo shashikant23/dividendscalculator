@@ -1,4 +1,5 @@
 # Dividends Calculator
+[![Build Status](https://travis-ci.org/juliuscarvajal/dividendscalculator.svg?branch=master)](https://travis-ci.org/juliuscarvajal/dividendscalculator)
 
 This is a dividends calculator for a simplified form of Tote betting.
 
