@@ -1,20 +1,31 @@
 var parser = require('../parser.js');
 var expect = require('chai').expect;
 
-describe('when a correct bet is entered with the following format: Bet:<product>:<selection>:<stake>', function() {
-  beforEach(function() {
-    var properties = {
-      Bet: [
-        { product: '[WPE]{1}' },
-        { selections: 
-          { product: { W: '\\d+', P: '\\d+', E: '\\d+,\\d+'} }
-        },
-        { stake: '\\d+' }
-      ]
-    };
+var betProperties = {
+  Bet: [
+    { product: '[WPE]{1}' },
+    { selections: 
+      { product: { W: '\\d+', P: '\\d+', E: '\\d+,\\d+'} }
+    },
+    { stake: '\\d+' }
+  ]
+};
 
-    parser.setDelimeter(':');
-    parser.setProperties(properties);
+var resultProperties = {
+  Result: 
+  [
+    { first: '\\d+'},
+    { second: '\\d+'},
+    { third: '\\d+'},
+  ]
+};
+
+parser.setDelimeter(':');
+
+describe('when a correct bet is entered with the following format: Bet:<product>:<selection>:<stake>', function() {
+  
+  beforeEach(function() {
+    parser.setProperties(betProperties);
   });
 
   it('should return a correct field to value map for Bet:W:1:3', function() {      
@@ -22,7 +33,7 @@ describe('when a correct bet is entered with the following format: Bet:<product>
     var map = parser.parse(bet);
     expect(map).to.eql(
       { key: 'Bet', 
-        data: { product: 'W', selection: '1', stake: '3' }
+        data: { product: 'W', selections: '1', stake: '3' }
       });
   });
 
@@ -31,7 +42,7 @@ describe('when a correct bet is entered with the following format: Bet:<product>
     var map = parser.parse(bet);
     expect(map).to.eql(
       { key: 'Bet', 
-        data: { product: 'P', selection: '2', stake: '4' }
+        data: { product: 'P', selections: '2', stake: '4' }
       });
   });
 
@@ -40,30 +51,20 @@ describe('when a correct bet is entered with the following format: Bet:<product>
     var map = parser.parse(bet);
     expect(map).to.eql(
       { key: 'Bet', 
-        data: { product: 'E', selection: '3,4', stake: '5' }
+        data: { product: 'E', selections: '3,4', stake: '5' }
       });
   });
 });
 
 describe('when an incorrect bet is entered', function() {
-  beforEach(function() {
-    var properties = {
-      Bet: [
-        { product: '[WPE]{1}' },
-        { selections: 
-          { product: { W: '\\d+', P: '\\d+', E: '\\d+,\\d+'} }
-        },
-        { stake: '\\d+' }
-      ]
-    };
-
-    parser.setDelimeter(':');
-    parser.setProperties(properties);
+  beforeEach(function() {
+    parser.setProperties(betProperties);
   });
 
   it('should return null for lower case "bet" in input', function() {
     var bet = 'bet:E:3,4:5';
     var map = parser.parse(bet);
+    console.log(map);
     expect(map).to.eql(null);
   });
 
@@ -145,40 +146,21 @@ describe('when an incorrect bet is entered', function() {
 });
 
 describe('when a correct result is entered with the following format: Result:<first>:<second>:<third>', function() {
-  beforEach(function() {
-    var properties = {
-      Result: 
-      [
-        { first: '\\d+'},
-        { second: '\\d+'},
-        { third: '\\d+'},
-      ]
-    };
-
-    parser.setDelimeter(':');
-    parser.setProperties(properties);
+  beforeEach(function() {
+    parser.setProperties(resultProperties);
   });
-
+  
   it('should return the correct field value map for Result:1:2:3', function() {
     var result = 'Result:1:2:3';
     var map = parser.parse(result);
-    expect(map).to.eql({ first: 1, second: 2, third: 3 });
+    console.log(map);
+    expect(map).to.eql({key: 'Result', data: { first: '1', second: '2', third: '3' }});
   });
 });
 
 describe('when the input is not in the following format: Result:<first>:<second>:<third>', function() {
-  beforEach(function() {
-    var properties = {
-      Result: 
-      [
-        { first: '\\d+'},
-        { second: '\\d+'},
-        { third: '\\d+'},
-      ]
-    };
-
-    parser.setDelimeter(':');
-    parser.setProperties(properties);
+  beforeEach(function() {
+    parser.setProperties(resultProperties);
   });
 
   it('should return null for lower case input', function() {

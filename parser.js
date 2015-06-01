@@ -105,7 +105,7 @@ Parser.prototype.parseSingle = function(input) {
   var array = this.toArray(this.sanitize(input), this.delimeter);
   var property = this.getProperty(array); 
   var map = this.map(_.rest(array), property);
-  var values = { key: _.first(array), data: map };
+  var values = map ? { key: _.first(array), data: map } : null;
   return values;
 };
 

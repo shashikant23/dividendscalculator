@@ -17,11 +17,11 @@ Rules.prototype.setProperties = function(properties) {
 Rules.prototype.getHouseCommission = function() {    
   var map = {};
   for (var key in this.pool) {
-    var commission = this.properties[key].commission * this.pool[key].stakes;
-    this.pool[key].stakes -= parseFloat(commission).toFixed(2);
+    var commission = parseFloat(this.properties[key].commission * this.pool[key].stakes).toFixed(2);
+    this.pool[key].stakes -= commission;
     map[key] = commission;
   }
-
+  
   return map;
 };  
 
@@ -50,8 +50,14 @@ Rules.prototype.calculateDividends = function(key, selections) {
   var dividends = totalStakes / stakes;
   if (!_.isFinite(dividends))
     dividends = null;
+  else
+    dividends = dividends.toFixed(2);
   
   return dividends;
+};
+
+Rules.prototype.clearBets = function() {
+  this.pool = [];
 };
 
 Rules.prototype.addBet = function(values) {
@@ -83,7 +89,7 @@ rules.on('Result', function(result) {
     this.emit(productName, key, result); //emit events based on the product name...
   }
   
-  this.pool = [];
+  this.clearBets();
 });
 
 module.exports = rules;
