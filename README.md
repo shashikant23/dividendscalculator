@@ -12,9 +12,14 @@ who placed a $1 stake. The betting house takes a commission out of the pool befo
 git clone https://github.com/juliuscarvajal/dividendscalculator.git
 cd dividendscalculator
 npm install
-node app.js
+npm start
 ```
 Tested on Mac and Windows 8.
+
+## Running the tests
+```
+npm test
+```
 
 ## Usage
 ### Input bets with the following format:
